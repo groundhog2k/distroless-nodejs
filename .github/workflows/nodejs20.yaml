@@ -1,0 +1,11 @@
+name: Azul Zulu JRE 17
+on:
+  workflow_call:
+
+jobs:
+  build-and-push-17:
+    secrets: inherit
+    uses: ./.github/workflows/wf_buildandpush.yaml
+    with:
+      nodejs_version: "v20.10.0"
+      tags: "groundhog2k/distroless-nodejs:20, groundhog2k/distroless-nodejs:20.10.0"

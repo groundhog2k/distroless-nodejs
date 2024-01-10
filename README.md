@@ -30,7 +30,7 @@ Simplest scenario is to create an own image by using this image as a base and ad
 An example Dockerfile would look like this:
 
 ```Dockerfile
-FROM groundhog2k/distroless-nodejs:latest
+FROM groundhog2k/distroless-nodejs:20
 WORKDIR /usr/app
 COPY /webpackage /usr/app
 CMD [ "index.js" ]

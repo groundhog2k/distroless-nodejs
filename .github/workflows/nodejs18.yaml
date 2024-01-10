@@ -1,0 +1,11 @@
+name: Azul Zulu JRE 11
+on:
+  workflow_call:
+
+jobs:
+  build-and-push-11:
+    secrets: inherit
+    uses: ./.github/workflows/wf_buildandpush.yaml
+    with:
+      nodejs_version: "v18.19.0"
+      tags: "groundhog2k/distroless-nodejs:18, groundhog2k/distroless-nodejs:18.19.0"
