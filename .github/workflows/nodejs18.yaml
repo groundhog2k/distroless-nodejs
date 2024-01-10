@@ -1,9 +1,9 @@
-name: Azul Zulu JRE 11
+name: NodeJS 18
 on:
   workflow_call:
 
 jobs:
-  build-and-push-11:
+  build-and-push-18:
     secrets: inherit
     uses: ./.github/workflows/wf_buildandpush.yaml
     with:

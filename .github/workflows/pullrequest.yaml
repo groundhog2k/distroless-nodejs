@@ -11,7 +11,7 @@ jobs:
     with:
       nodejs_version: "v18.19.0"
 
-  verify-and-scan-120:
+  verify-and-scan-20:
     permissions:
       security-events: write  
     uses: ./.github/workflows/wf_verifyandscan.yaml
