@@ -1,0 +1,11 @@
+name: NodeJS 20
+on:
+  workflow_call:
+
+jobs:
+  build-and-push-20:
+    secrets: inherit
+    uses: ./.github/workflows/wf_buildandpush.yaml
+    with:
+      nodejs_version: "v20.10.0"
+      tags: "groundhog2k/distroless-nodejs:20, groundhog2k/distroless-nodejs:20.10.0"

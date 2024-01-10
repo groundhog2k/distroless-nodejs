@@ -1,0 +1,40 @@
+name: Verify and scan container image
+on:
+  workflow_call:
+    inputs:
+      nodejs_version:
+        required: true
+        type: string
+
+jobs:
+  verify-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pull request
+        uses: actions/checkout@master
+      - name: Build a temporary image for verification
+        run: docker build . -t groundhog2k/distroless-nodejs:${{ inputs.nodejs_version }} --build-arg NODEJS_VERSION=${{ inputs.nodejs_version }}
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "groundhog2k/distroless-nodejs:${{ inputs.nodejs_version }}"
+          format: "sarif"
+          output: "trivy-results.sarif"
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: "trivy-results.sarif"
+          category: trivy-scan
+      - name: Run Grype vulnerability scanner
+        id: scan
+        uses: anchore/scan-action@v3
+        with:
+          image: "groundhog2k/distroless-nodejs:${{ inputs.nodejs_version }}"
+          severity-cutoff: "low"
+          fail-build: false
+          output-format: "sarif"
+      - name: Upload Grype scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+          category: grype-scan
